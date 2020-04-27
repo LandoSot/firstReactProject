@@ -5,8 +5,14 @@ import {View, Text, TextInput, Button} from 'react-native';
 //create stuff
 class App extends React.Component{
   state = {
-    todo: "This is our message on screen"
+    temporalText: "",
+    todo: ""
   }
+
+  addTodo = () => {
+    this.setState({todo: this.state.temporalText})
+  }
+
   render(){
     return(
       <View style = {styles.viewstyle}>
@@ -15,11 +21,12 @@ class App extends React.Component{
         <TextInput
           style = {styles.inputStyle}
           onChangeText = {
-            (text) => this.setState({todo: text})
+            (temporalText) => this.setState({temporalText})
           }
         />
         <Button
           title="Add ToDo"
+          onPress = {this.addTodo}
         />
         <Text>{this.state.todo}</Text>
       </View>
