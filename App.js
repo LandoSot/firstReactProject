@@ -6,7 +6,15 @@ import {View, Text, TextInput, Button} from 'react-native';
 class App extends React.Component{
   state = {
     temporalText: "",
-    todo: ""
+    todo: ["Learning React", "Learning React Native", "Built apps"]
+  }
+
+  renderTodos = () => {
+    return this.state.todo.map(t => {
+      return (
+        <Text key = {t}>{t}</Text>
+      )
+    })
   }
 
   addTodo = () => {
@@ -28,7 +36,7 @@ class App extends React.Component{
           title="Add ToDo"
           onPress = {this.addTodo}
         />
-        <Text>{this.state.todo}</Text>
+        {this.renderTodos()}
       </View>
     )
   }
