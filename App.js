@@ -16,10 +16,20 @@ class App extends React.Component{
     this.setState({todo: arr, temporalText: ""});
   }
 
+  deleteTodo = (indx) => {
+    var arr = this.state.todo;
+    var pos = this.state.todo.indexOf(indx);
+    arr.splice(pos, 1);
+    this.setState({todo: arr});
+  }
+
   renderTodos = () => {
     return this.state.todo.map(indx => {
       return (
-        <Text key = {indx}>{indx}</Text>
+        <Text 
+          key = {indx}
+          onPress = {() => {this.deleteTodo(indx)}}
+        >{indx}</Text>
       )
     })
   }
