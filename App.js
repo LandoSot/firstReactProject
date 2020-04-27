@@ -6,19 +6,22 @@ import {View, Text, TextInput, Button} from 'react-native';
 class App extends React.Component{
   state = {
     temporalText: "",
-    todo: ["Learning React", "Learning React Native", "Built apps"]
-  }
-
-  renderTodos = () => {
-    return this.state.todo.map(t => {
-      return (
-        <Text key = {t}>{t}</Text>
-      )
-    })
+    todo: []
   }
 
   addTodo = () => {
-    this.setState({todo: this.state.temporalText})
+    var newTodo = this.state.temporalText;
+    var arr = this.state.todo;
+    arr.push(newTodo);
+    this.setState({todo: arr, temporalText: ""});
+  }
+
+  renderTodos = () => {
+    return this.state.todo.map(indx => {
+      return (
+        <Text key = {indx}>{indx}</Text>
+      )
+    })
   }
 
   render(){
@@ -31,6 +34,7 @@ class App extends React.Component{
           onChangeText = {
             (temporalText) => this.setState({temporalText})
           }
+          value = {this.state.temporalText}
         />
         <Button
           title="Add ToDo"
