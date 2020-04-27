@@ -6,11 +6,32 @@ import {View, Text, TextInput, Button} from 'react-native';
 class App extends React.Component{
   state = {
     temporalText: "",
-    todo: ""
+    todo: []
   }
 
   addTodo = () => {
-    this.setState({todo: this.state.temporalText})
+    var newTodo = this.state.temporalText;
+    var arr = this.state.todo;
+    arr.push(newTodo);
+    this.setState({todo: arr, temporalText: ""});
+  }
+
+  deleteTodo = (indx) => {
+    var arr = this.state.todo;
+    var pos = this.state.todo.indexOf(indx);
+    arr.splice(pos, 1);
+    this.setState({todo: arr});
+  }
+
+  renderTodos = () => {
+    return this.state.todo.map(indx => {
+      return (
+        <Text 
+          key = {indx}
+          onPress = {() => {this.deleteTodo(indx)}}
+        >{indx}</Text>
+      )
+    })
   }
 
   render(){
@@ -23,12 +44,13 @@ class App extends React.Component{
           onChangeText = {
             (temporalText) => this.setState({temporalText})
           }
+          value = {this.state.temporalText}
         />
         <Button
           title="Add ToDo"
           onPress = {this.addTodo}
         />
-        <Text>{this.state.todo}</Text>
+        {this.renderTodos()}
       </View>
     )
   }
