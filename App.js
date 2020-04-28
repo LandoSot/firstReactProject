@@ -23,33 +23,64 @@ class App extends React.Component{
     this.setState({todo: arr});
   }
 
+  updateTodo = (indx) => {
+    var newTodo = this.state.temporalText;
+    var arr = this.state.todo
+    var pos = this.state.todo.indexOf(indx);
+    if (newTodo != '') {
+      arr[pos] = newTodo;
+    }
+    this.setState({todo: arr, temporalText: ""});
+  }
+
   renderTodos = () => {
     return this.state.todo.map(indx => {
       return (
-        <Text 
-          key = {indx}
-          onPress = {() => {this.deleteTodo(indx)}}
-        >{indx}</Text>
+        <View style = {styles.cardsStyles}>
+          <Text
+            key = {indx}
+            style = {styles.tasksStyle}
+          >{indx}</Text>
+          <View style = {styles.eraseTaskStyle}>
+            <Button
+              title = 'Open'
+              color='#A0A0A0'
+              // onPress = {() => {this.deleteTodo(indx)}}
+            />
+            <Button
+              title = 'Update'
+              color = '#0ECCD7'
+              onPress = {() => {this.updateTodo(indx)}}
+            />
+            <Button
+              title = 'Delete'
+              color = 'red'
+              onPress = {() => {this.deleteTodo(indx)}}
+            />
+          </View>
+        </View>
       )
     })
   }
 
   render(){
     return(
-      <View style = {styles.viewstyle}>
-        <Text>Hello world.</Text>
-        <Text>Making my first app.</Text>
-        <TextInput
-          style = {styles.inputStyle}
-          onChangeText = {
-            (temporalText) => this.setState({temporalText})
-          }
-          value = {this.state.temporalText}
-        />
-        <Button
-          title="Add ToDo"
-          onPress = {this.addTodo}
-        />
+      <View style = {styles.genViewstyle}>
+        <Text style={styles.appNameStyles}>ToDo: App Note</Text>
+        <View style = {styles.toolsStyles}>
+            <TextInput
+              style = {styles.inputStyle}
+              onChangeText = {(temporalText) => this.setState({temporalText})}
+              value = {this.state.temporalText}
+            />
+          <View style = {styles.buttonStyle}>
+            <Button
+              title = 'Add ToDo'
+              color = 'green'
+              onPress = {this.addTodo}
+            />
+          </View>
+        </View>
         {this.renderTodos()}
       </View>
     )
@@ -57,16 +88,53 @@ class App extends React.Component{
 }
 
 const styles = {
-  viewstyle: {
-    flex: 1,
+  genViewstyle: {
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  inputStyle: {
-    height: 40,
-    width: 200,
     borderColor: 'black',
-    borderWidth: 1
+    borderWidth: 1,
+    height: '100%',
+    marginTop: 30,
+  },
+  appNameStyles: {
+    fontSize: 30,
+  },
+  toolsStyles: {
+    alignItems: 'flex-end',
+    marginVertical: 10,
+    width: '80%',
+  },
+  inputStyle:{
+    borderWidth: 1,
+    height: 40,
+    marginVertical: 5,
+    padding: 3,
+    width: '100%',
+  },
+  buttonStyle: {
+    width: '50%',
+  },
+  cardsStyles: {
+    justifyContent: 'space-around',
+    borderColor: 'black',
+    borderRadius: 5,
+    borderWidth: 2,
+    height: 100,
+    marginVertical: 3,
+    padding: 3,
+    width: '80%',
+  },
+  tasksStyle: {
+    borderColor: 'black',
+    borderBottomWidth: 1,
+    width: '100%',
+    height: '50%',
+  },
+  eraseTaskStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    height: '50%',
+    alignItems: 'center',
   }
 }
 
