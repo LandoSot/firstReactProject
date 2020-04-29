@@ -12,7 +12,9 @@ class App extends React.Component{
   addTodo = () => {
     var newTodo = this.state.temporalText;
     var arr = this.state.todo;
-    arr.push(newTodo);
+    if (newTodo != '') {
+      arr.push(newTodo);
+    }
     this.setState({todo: arr, temporalText: ""});
   }
 
@@ -36,9 +38,8 @@ class App extends React.Component{
   renderTodos = () => {
     return this.state.todo.map(indx => {
       return (
-        <View style = {styles.cardsStyles}>
+        <View  key = {indx} style = {styles.cardsStyles}>
           <Text
-            key = {indx}
             style = {styles.tasksStyle}
           >{indx}</Text>
           <View style = {styles.eraseTaskStyle}>
@@ -92,7 +93,7 @@ const styles = {
     alignItems: 'center',
     borderColor: 'black',
     borderWidth: 1,
-    height: '100%',
+    flex: 1,
     marginTop: 30,
   },
   appNameStyles: {
